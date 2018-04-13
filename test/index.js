@@ -66,6 +66,17 @@ describe('hubot-mtg', function () {
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'transform message'])
   })
 
+  it('listens for query command', async function () {
+    await this.room.user.say('tamiyo', 'hubot mtg query o:vigilance')
+
+    expect(commands.show.callCount).to.equal(0)
+    expect(commands.query).to.be.calledWith('o:vigilance')
+
+    await wait()
+
+    expect(this.room.messages[1]).to.deep.equal(['hubot', 'query message'])
+  })
+
   it('listens for flip command', async function () {
     await this.room.user.say('tamiyo', 'hubot mtg flip Jace, Vryn')
 

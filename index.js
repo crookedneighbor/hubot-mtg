@@ -21,6 +21,7 @@ module.exports = (robot) => {
     robot.commands.push('hubot (magic|mtg) <name> - Display a Magic: The Gathering card named <name>')
     robot.commands.push('hubot (magic|mtg) (transform|flip) <name> - Display the reverse side of a Magic: The Gathering card named <name>')
     robot.commands.push('hubot (magic|mtg) (price|$) <name> - Display the prices for a Magic: The Gathering card named <name>')
+    robot.commands.push('hubot (magic|mtg) query <search term> - Display the cards matching the <search term>. A max of 5 cards will be returned. If more than 5 are found, a link to scryfall will be provided.')
     robot.commands.push('hubot (magic|mtg) rulings <name> - Display the rulings for a Magic: The Gathering card named <name>')
   }
 

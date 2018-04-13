@@ -13,7 +13,7 @@ module.exports = function transform (name) {
     return {
       card,
       imageUrls: urls,
-      message: urls.join(' ')
+      message: `${card.name} - ${urls.join(' ')}`
     }
   })
 }

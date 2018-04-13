@@ -13,7 +13,7 @@ module.exports = function show (name) {
     return {
       card,
       imageUrl: url,
-      message: url
+      message: `${card.name} - ${url}`
     }
   })
 }

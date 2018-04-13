@@ -17,7 +17,7 @@ describe('show', function () {
     return show('Budoka Gardener').then((result) => {
       expect(result.card).to.equal(this.card)
       expect(result.imageUrl).to.equal('https://img.scryfall.com/cards/normal/en/set/100a.jpg')
-      expect(result.message).to.equal('https://img.scryfall.com/cards/normal/en/set/100a.jpg')
+      expect(result.message).to.equal('Foo - https://img.scryfall.com/cards/normal/en/set/100a.jpg')
     })
   })
 })

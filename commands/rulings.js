@@ -15,7 +15,8 @@ module.exports = function rulings (name) {
     if (rulings.length === 0) {
       message = `No rulings found for ${card.name}`
     } else {
-      message = rulings.map(rule => `• ${rule.comment}`).join('\n')
+      message = `Rulings for ${card.name}:\n`
+      message += rulings.map(rule => `• ${rule.comment}`).join('\n')
     }
 
     return {

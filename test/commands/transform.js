@@ -17,7 +17,7 @@ describe('transform', function () {
     return transform('Jace, vryn').then((result) => {
       expect(result.card).to.equal(this.card)
       expect(result.imageUrls[0]).to.equal('https://img.scryfall.com/cards/normal/en/set/100a.jpg')
-      expect(result.message).to.equal('https://img.scryfall.com/cards/normal/en/set/100a.jpg')
+      expect(result.message).to.equal('Foo - https://img.scryfall.com/cards/normal/en/set/100a.jpg')
     })
   })
 
@@ -25,7 +25,7 @@ describe('transform', function () {
     this.card.getBackImage.resolves(['https://img.scryfall.com/cards/normal/en/emn/15a.jpg', 'https://img.scryfall.com/cards/normal/en/emn/28a.jpg'])
     return transform('Brisela').then((result) => {
       expect(result.card).to.equal(this.card)
-      expect(result.message).to.equal('https://img.scryfall.com/cards/normal/en/emn/15a.jpg https://img.scryfall.com/cards/normal/en/emn/28a.jpg')
+      expect(result.message).to.equal('Foo - https://img.scryfall.com/cards/normal/en/emn/15a.jpg https://img.scryfall.com/cards/normal/en/emn/28a.jpg')
     })
   })
 })

@@ -22,7 +22,7 @@ describe('rulings', function () {
     return rulings('Budoka Gardener').then((result) => {
       expect(result.card).to.equal(this.card)
       expect(result.rulings).to.equal(this.rulings)
-      expect(result.message).to.equal('• rule 1\n• rule 2')
+      expect(result.message).to.equal('Rulings for Foo:\n• rule 1\n• rule 2')
     })
   })
 

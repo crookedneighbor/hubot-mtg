@@ -7,7 +7,7 @@ describe('price', function () {
   beforeEach(function () {
     this.card = {
       object: 'card',
-      name: 'Foo',
+      name: 'Budoka Gardener',
       usd: '10.00',
       tix: '1'
     }
@@ -17,7 +17,7 @@ describe('price', function () {
   it('resolves with a card and a message', function () {
     return price('Budoka Gardener').then((result) => {
       expect(result.card).to.equal(this.card)
-      expect(result.message).to.equal('$10.00 or 1 tickets')
+      expect(result.message).to.equal('Budoka Gardener - $10.00 or 1 tickets')
     })
   })
 
@@ -26,7 +26,7 @@ describe('price', function () {
 
     return price('Budoka Gardener').then((result) => {
       expect(result.card).to.equal(this.card)
-      expect(result.message).to.equal('$10.00')
+      expect(result.message).to.equal('Budoka Gardener - $10.00')
     })
   })
 
@@ -35,7 +35,7 @@ describe('price', function () {
 
     return price('Budoka Gardener').then((result) => {
       expect(result.card).to.equal(this.card)
-      expect(result.message).to.equal('1 tickets')
+      expect(result.message).to.equal('Budoka Gardener - 1 tickets')
     })
   })
 
@@ -45,7 +45,7 @@ describe('price', function () {
 
     return price('Budoka Gardener').then((result) => {
       expect(result.card).to.equal(this.card)
-      expect(result.message).to.equal('Can\'t find price data for Foo')
+      expect(result.message).to.equal('Can\'t find price data for Budoka Gardener')
     })
   })
 })

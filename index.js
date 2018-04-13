@@ -5,12 +5,10 @@
 //
 // Dependencies:
 //   scryfall-client
+//   string-similarity: "^1.2.0"
 //
 // Configuration:
 //   None
-//
-// Commands:
-//   hubot (magic|mtg) <name> - Display a Magic: The Gathering card named <name>
 
 const commands = require('./commands')
 
@@ -19,6 +17,13 @@ function makeMTGRegex (keyword) {
 }
 
 module.exports = (robot) => {
+  if (robot.commands) {
+    robot.commands.push('hubot (magic|mtg) <name> - Display a Magic: The Gathering card named <name>')
+    robot.commands.push('hubot (magic|mtg) (transform|flip) <name> - Display the reverse side of a Magic: The Gathering card named <name>')
+    robot.commands.push('hubot (magic|mtg) (price|$) <name> - Display the prices for a Magic: The Gathering card named <name>')
+    robot.commands.push('hubot (magic|mtg) rulings <name> - Display the rulings for a Magic: The Gathering card named <name>')
+  }
+
   robot.respond(makeMTGRegex('(.*)'), (msg) => {
     let commandPromise
     let name = msg.match[1]

@@ -103,7 +103,7 @@ describe('scryfall', function () {
 
       let onNewSpoilers = this.sandbox.stub()
 
-      return scryfall.pollForSpoilers('DOM', onNewSpoilers).then((handler) => {
+      return scryfall.pollForSpoilers('DOM', {onNewSpoilers}).then((handler) => {
         handler.cancel()
       })
     })

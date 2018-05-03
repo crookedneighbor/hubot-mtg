@@ -58,7 +58,7 @@ describe('spoilers', function () {
     return spoilers(this.fakeMsg, 'FAKE').then(async () => {
       await this.wait()
 
-      let onNewSpoilersFunction = scryfall.pollForSpoilers.args[0][1]
+      let onNewSpoilersFunction = scryfall.pollForSpoilers.args[0][1].onNewSpoilers
 
       this.fakeMsg.send.resetHistory()
 
@@ -82,6 +82,23 @@ describe('spoilers', function () {
       expect(this.fakeMsg.send).to.be.calledWith('Card 2 - https://card2.png')
       expect(this.fakeMsg.send).to.be.calledWith('Card 3 - https://card3.png')
       expect(this.fakeMsg.send).to.be.calledWith('Card 4 - https://card4.png')
+    })
+  })
+
+  it('sends message about timeout when called', function () {
+    return spoilers(this.fakeMsg, 'FAKE').then(async () => {
+      await this.wait()
+
+      let timeoutFunction = scryfall.pollForSpoilers.args[0][1].onTimeout
+
+      this.fakeMsg.send.resetHistory()
+
+      timeoutFunction()
+
+      await this.wait()
+
+      expect(this.fakeMsg.send.callCount).to.equal(1)
+      expect(this.fakeMsg.send).to.be.calledWith('No new spoilers for Fake Set were found in 24 hours. Stopping spoiler feed...')
     })
   })
 

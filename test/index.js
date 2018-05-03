@@ -5,12 +5,6 @@ const helper = new Helper('../index.js')
 
 const commands = require('../commands')
 
-function wait (time = 100) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, time)
-  })
-}
-
 describe('hubot-mtg', function () {
   this.slow(500)
 
@@ -34,7 +28,7 @@ describe('hubot-mtg', function () {
 
     expect(commands.show).to.be.calledWith('Moon Sage')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages).to.deep.equal([
       ['tamiyo', 'hubot magic Moon Sage'],
@@ -47,7 +41,7 @@ describe('hubot-mtg', function () {
 
     expect(commands.show).to.be.calledWith('Moon Sage')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages).to.deep.equal([
       ['tamiyo', 'hubot mtg Moon Sage'],
@@ -61,7 +55,7 @@ describe('hubot-mtg', function () {
     expect(commands.show.callCount).to.equal(0)
     expect(commands.transform).to.be.calledWith('Jace, Vryn')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'transform message'])
   })
@@ -72,7 +66,7 @@ describe('hubot-mtg', function () {
     expect(commands.show.callCount).to.equal(0)
     expect(commands.query).to.be.calledWith('o:vigilance')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'query message'])
   })
@@ -83,7 +77,7 @@ describe('hubot-mtg', function () {
     expect(commands.show.callCount).to.equal(0)
     expect(commands.flip).to.be.calledWith('Jace, Vryn')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'flip message'])
   })
@@ -94,7 +88,7 @@ describe('hubot-mtg', function () {
     expect(commands.show.callCount).to.equal(0)
     expect(commands.price).to.be.calledWith('Jadelight')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'price message'])
   })
@@ -105,7 +99,7 @@ describe('hubot-mtg', function () {
     expect(commands.show.callCount).to.equal(0)
     expect(commands.$).to.be.calledWith('Jadelight')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', '$ message'])
   })
@@ -116,7 +110,7 @@ describe('hubot-mtg', function () {
     expect(commands.show.callCount).to.equal(0)
     expect(commands.rulings).to.be.calledWith('Living Death')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'rulings message'])
   })
@@ -129,9 +123,42 @@ describe('hubot-mtg', function () {
 
     await this.room.user.say('tamiyo', 'hubot mtg Roon')
 
-    await wait()
+    await this.wait()
 
     expect(this.room.messages[1]).to.deep.equal(['hubot', 'Could not find `Roon`'])
+    expect(console.error).to.be.calledWith(error)
+  })
+
+  it('listens for spoilers command', async function () {
+    await this.room.user.say('tamiyo', 'hubot mtg spoilers dom')
+
+    expect(commands.show.callCount).to.equal(0)
+    expect(commands.spoilers).to.be.calledWith(this.sandbox.match.object, 'dom')
+  })
+
+  it('listens for spoiler cancel command', async function () {
+    commands.spoilers.reset()
+
+    this.sandbox.stub(commands.spoilers, 'cancel')
+    this.sandbox.spy(commands.spoilers)
+
+    await this.room.user.say('tamiyo', 'hubot mtg spoilers cancel')
+
+    expect(commands.spoilers.callCount).to.equal(0)
+    expect(commands.spoilers.cancel.callCount).to.equal(1)
+  })
+
+  it('messages out if there was an error in spoilers command', async function () {
+    this.sandbox.stub(console, 'error')
+
+    let error = new Error('hey')
+
+    commands.spoilers.rejects(error)
+    await this.room.user.say('tamiyo', 'hubot mtg spoilers dom')
+
+    await this.wait()
+
+    expect(this.room.messages[1]).to.deep.equal(['hubot', 'Something went wrong when looking up spoilers.'])
     expect(console.error).to.be.calledWith(error)
   })
 })

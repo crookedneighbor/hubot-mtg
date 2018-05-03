@@ -5,7 +5,8 @@ let commands = {
   transform: require('./transform'),
   price: require('./price'),
   query: require('./query'),
-  rulings: require('./rulings')
+  rulings: require('./rulings'),
+  spoilers: require('./spoilers')
 }
 
 // aliases

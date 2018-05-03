@@ -4,12 +4,9 @@ let scryfall = require('../../lib/scryfall')
 let ScryfallClient = require('scryfall-client')
 
 describe('scryfall', function () {
-  beforeEach(function () {
-    this.sandbox.stub(ScryfallClient.prototype, 'get').resolves()
-  })
-
   describe('search', function () {
     beforeEach(function () {
+      this.sandbox.stub(ScryfallClient.prototype, 'get')
       ScryfallClient.prototype.get.withArgs('cards/search').resolves([{
         object: 'card',
         name: 'Foo'
@@ -51,6 +48,7 @@ describe('scryfall', function () {
 
   describe('queryByName', function () {
     beforeEach(function () {
+      this.sandbox.stub(ScryfallClient.prototype, 'get')
       ScryfallClient.prototype.get.withArgs('cards/search').resolves([{
         object: 'card',
         name: 'Foo'
@@ -76,6 +74,37 @@ describe('scryfall', function () {
         expect(card.name).to.equal('Foo')
 
         return scryfall.queryByName('F b')
+      })
+    })
+  })
+
+  describe('getMostRecentSet', function () {
+    beforeEach(function () {
+      this.sandbox.stub(ScryfallClient.prototype, 'get')
+      ScryfallClient.prototype.get.withArgs('sets').resolves([{
+        object: 'set',
+        name: 'Set 1'
+      }, {
+        object: 'set',
+        name: 'Set 2'
+      }])
+    })
+
+    it('resolves with the first set', function () {
+      return scryfall.getMostRecentSet().then((set) => {
+        expect(set.name).to.equal('Set 1')
+      })
+    })
+  })
+
+  describe('pollForSpoilers', function () {
+    it('starts polling for spoilers and gives a spoiler handler', function () {
+      this.timeout(10000)
+
+      let onNewSpoilers = this.sandbox.stub()
+
+      return scryfall.pollForSpoilers('DOM', onNewSpoilers).then((handler) => {
+        handler.cancel()
       })
     })
   })

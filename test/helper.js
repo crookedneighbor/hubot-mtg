@@ -10,6 +10,12 @@ beforeEach(function () {
   this.rejectIfResolves = function () {
     throw new Error('Should not resolve')
   }
+
+  this.wait = function (time = 5) {
+    return new Promise(function (resolve) {
+      setTimeout(resolve, time)
+    })
+  }
 })
 
 afterEach(function () {

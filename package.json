@@ -1,6 +1,6 @@
 {
   "name": "hubot-mtg",
-  "version": "0.0.1",
+  "version": "0.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -8,9 +8,13 @@
     "posttest": "npm run lint",
     "test": "mocha"
   },
-  "keywords": [],
+  "keywords": [
+    "hubot",
+    "mtg",
+    "magic the gathering"
+  ],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "mtg-spoilers": "0.0.1",
     "scryfall-client": "0.3.0",

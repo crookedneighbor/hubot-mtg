@@ -25,6 +25,8 @@ function spoilers (msg, setCode) {
     return scryfall.getMostRecentSet().then(set => set.code)
   }).then((code) => {
     return scryfall.pollForSpoilers(code, {
+      timeout: Number(process.env.HUBOT_MTG_SPOILERS_TIMEOUT),
+      iteration: Number(process.env.HUBOT_MTG_SPOILERS_ITERATION),
       onNewSpoilers (spoilers) {
         sendNewCards(msg, spoilers)
       },

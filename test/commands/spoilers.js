@@ -47,6 +47,28 @@ describe('spoilers', function () {
     })
   })
 
+  it('can pass custom timeout to spoilers command', function () {
+    process.env.HUBOT_MTG_SPOILERS_TIMEOUT = 500
+
+    return spoilers(this.fakeMsg, 'CODE').then(() => {
+      expect(scryfall.pollForSpoilers).to.be.calledWith('CODE', this.sandbox.match({
+        timeout: 500
+      }))
+      delete process.env.HUBOT_MTG_SPOILERS_TIMEOUT
+    })
+  })
+
+  it('can pass custom iteration to spoilers command', function () {
+    process.env.HUBOT_MTG_SPOILERS_ITERATION = 500
+
+    return spoilers(this.fakeMsg, 'CODE').then(() => {
+      expect(scryfall.pollForSpoilers).to.be.calledWith('CODE', this.sandbox.match({
+        iteration: 500
+      }))
+      delete process.env.HUBOT_MTG_SPOILERS_ITERATION
+    })
+  })
+
   it('sends a message about listening for cards for specified set and presents latest spoiler', function () {
     return spoilers(this.fakeMsg, 'FAKE').then(() => {
       expect(this.fakeMsg.send).to.be.calledWith('Watching for new spoilers for Fake Set...')

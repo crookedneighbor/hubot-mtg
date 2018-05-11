@@ -10,6 +10,8 @@
 //
 // Configuration:
 //   HUBOT_MTG_MAX_QUERY_RESULTS - How many results to display from `mtg query` command. Defaults to 5.
+//   HUBOT_MTG_SPOILERS_TIMEOUT - How long in milliseconds to wait after the last spoiler is found until automatically stoppoing the spoiler feed. Defaults to 24 hours.
+//   HUBOT_MTG_SPOILERS_ITERATION - How long to wait in milliseconds in between polling for new spoilers. Defaults to 15 minutes.
 
 const commands = require('./commands')
 

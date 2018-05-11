@@ -4,7 +4,7 @@ const scryfall = require('../lib/scryfall')
 const DEFAULT_MAX_RESULTS = 5
 
 module.exports = function query (searchTerm) {
-  let maxNumberOfResults = process.env.HUBOT_MTG_MAX_QUERY_RESULTS || DEFAULT_MAX_RESULTS
+  let maxNumberOfResults = Number(process.env.HUBOT_MTG_MAX_QUERY_RESULTS) || DEFAULT_MAX_RESULTS
   let scryfallSearchUrl = `https://scryfall.com/search?q=${encodeURIComponent(searchTerm)}`
   return scryfall.search(searchTerm).then((cards) => {
     let exceedsMax = cards.total_cards > maxNumberOfResults

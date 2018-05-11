@@ -9,7 +9,7 @@
 //   string-similarity: "^1.2.0"
 //
 // Configuration:
-//   None
+//   HUBOT_MTG_MAX_QUERY_RESULTS - How many results to display from `mtg query` command. Defaults to 5.
 
 const commands = require('./commands')
 

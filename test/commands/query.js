@@ -49,6 +49,28 @@ describe('query', function () {
     })
   })
 
+  it('can override max result', function () {
+    let cards = []
+
+    for (let i = 0; i < 25; i++) {
+      cards.push({name: `Name ${i}`})
+    }
+    cards.total_cards = 25
+    expect(cards.length).to.equal(25)
+
+    scryfall.search.resolves(cards)
+
+    process.env.HUBOT_MTG_MAX_QUERY_RESULTS = 10
+
+    return query('o:vigilance').then((result) => {
+      expect(result.cards[0].name).to.equal('Name 0')
+      expect(result.cards.length).to.equal(10)
+      expect(result.message).to.equal('Name 0\nName 1\nName 2\nName 3\nName 4\nName 5\nName 6\nName 7\nName 8\nName 9\n15 more cards found. See all: https://scryfall.com/search?q=o%3Avigilance\n')
+
+      delete process.env.HUBOT_MTG_MAX_QUERY_RESULTS
+    })
+  })
+
   it('does not pluralize when only 1 extra card remains', function () {
     let cards = []
 
